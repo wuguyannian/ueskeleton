@@ -1,0 +1,75 @@
+[
+    {
+        "name": "Pelvis",
+        "axis": "x",
+        "angle": 180.0
+    },
+    {
+        "name": "spine_02",
+        "axis": "x",
+        "angle": 180.0
+    },
+    {
+        "name": "clavicle_l",
+        "axis": "x",
+        "angle": -90.0
+    },    
+    {
+        "name": "UpperArm_L",
+        "axis": "x",
+        "angle": -90.0
+    },    
+    {
+        "name": "lowerarm_l",
+        "axis": "x",
+        "angle": -90.0
+    },
+    {
+        "name": "Hand_L",
+        "axis": "x",
+        "angle": -180.0,
+        "recursive": 4
+    },    
+    {
+        "name": "clavicle_r",
+        "axis": "x",
+        "angle": -90.0
+    },
+    {
+        "name": "UpperArm_R",
+        "axis": "x",
+        "angle": -90.0
+    },
+    {
+        "name": "lowerarm_r",
+        "axis": "x",
+        "angle": -90.0,
+        "roll_add": -90.0
+    },
+    {
+        "name": "Hand_R",
+        "axis": "x",
+        "angle": 180.0,
+        "recursive": 4
+    },    
+    {
+        "name": "Thigh_L",
+        "axis": "x",
+        "angle": -90.0
+    },  
+    {
+        "name": "calf_l",
+        "axis": "x",
+        "angle": 180.0
+    },
+    {
+        "name": "Thigh_R",
+        "axis": "x",
+        "angle": -90.0
+    },
+    {
+        "name": "calf_r",
+        "axis": "x",
+        "angle": 180.0
+    }
+]

@@ -1,0 +1,51 @@
+[
+    {
+        "name": "ik_foot_root",
+        "source_bone": "Pelvis",
+        "head": [0, 0, 0],
+        "tail": [0, 24, 0],
+        "Matrix":[
+            [1,0,0,0],
+            [0,1,0,0],
+            [0,0,1,0],
+            [0,0,0,1]
+        ]
+    },
+    {
+        "name": "ik_hand_root",
+        "source_bone": "Pelvis",
+        "head": [0, 0, 0],
+        "tail": [0, 126, 0],
+        "Matrix":[
+            [1,0,0,0],
+            [0,1,0,0],
+            [0,0,1,0],
+            [0,0,0,1]
+        ]
+    },
+    {
+        "name": "ik_hand_gun",
+        "source_bone": "Hand_R",
+        "parent_bone": "ik_hand_root"
+    },
+    {
+        "name": "ik_hand_r",
+        "source_bone": "Hand_R",
+        "parent_bone": "ik_hand_gun"
+    },
+    {
+        "name": "ik_hand_l",
+        "source_bone": "Hand_L",
+        "parent_bone": "ik_hand_gun"
+    },
+    {
+        "name": "ik_foot_r",
+        "source_bone": "Foot_R",
+        "parent_bone": "ik_foot_root"
+    },
+    {
+        "name": "ik_foot_l",
+        "source_bone": "Foot_L",
+        "parent_bone": "ik_foot_root"
+    }
+]

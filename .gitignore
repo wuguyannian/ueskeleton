@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+*.pyc
+*.log
+*~
+*.swp
+/venv/*
+*/releases/*
