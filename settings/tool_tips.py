@@ -6,4 +6,4 @@ template_tool_tip = "This template contains the ik and orientation configuration
 # ---------- tool tips for the user interface properties ----------
 skeleton_template_tool_tip = "Select a skeleton template"
 
-skeleton_template_tool_tip = "Select a skeleton template"
+export_template_tool_tip = "Select a skeleton template to export"

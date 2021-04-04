@@ -7,7 +7,7 @@ import importlib
 from . import properties, operators
 from .settings import tool_tips
 from .functions import scene, templates, utilities
-from .ui import view_3d
+from .ui import view_3d, addon_preferences, exporter
 
 
 bl_info = {
@@ -25,18 +25,22 @@ bl_info = {
 modules = (
     scene,
     view_3d,
+    exporter,
     tool_tips,
     utilities,
     operators,
     templates,
-    properties
+    properties,
+    addon_preferences
 )
 
 classes = (
     operators.RemoveTemplateFolder,
     operators.ConvertToEpicSkeleton,
-    operators.NullOperator,
-    view_3d.UE_SKELETON_PT_Panel   
+    operators.ExportSkeletonTemplate,
+    operators.ImportSkeletonTemplate,
+    addon_preferences.UESkeletonAddonPreferences,
+    view_3d.UE_SKELETON_PT_Panel
 )
 
 

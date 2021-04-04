@@ -11,6 +11,7 @@ from . import utilities
 from ..settings.tool_tips import *
 
 _result_reference_populate_templates_dropdown = []
+_result_reference_get_skeleton_templates = []
 
 
 # -------------- functions that handle the skeleton templating --------------
@@ -82,6 +83,31 @@ def remove_template_folder(properties):
 
     # set the selected skeleton template to the default
     properties.selected_skeleton_template = properties.default_template
+
+def create_template_folder(template_name, properties):
+    """
+    This function creates a new template folder in the addon's skeleton templates folder.
+
+    :param str template_name: The name of the template folder to create.
+    :param object properties: The property group that contains variables that maintain the addon's correct state.
+    """
+    # remove non alpha numeric characters
+    template_name = re.sub(r'\W+', '_', template_name.strip()).lower()
+
+    # create the template folder
+    template_path = os.path.join(properties.skeleton_templates_path, template_name)
+    if not os.path.exists(template_path):
+        try:
+            original_umask = os.umask(0)
+            os.makedirs(template_path, 0o777)
+        finally:
+            os.umask(original_umask)
+
+    # keep checking the os file system till the new folder exists
+    while not os.path.exists(template_path):
+        pass
+
+    return template_path
 
 
 def populate_templates_dropdown(self=None, context=None):
@@ -157,20 +183,48 @@ def get_orientation_data(properties):
     return orientation_data
 
 
-def save_json_file(data, file_path):
+def import_zip(zip_file_path, properties):
     """
-    This function saves json data to a file provided a full file path.
+    This function gets a zip folder and unpacks it into the skeleton templates folder.
 
-    :param dict data: A dictionary to be saved as json.
-    :param str file_path: The full file path to where the file will be saved.
+    :param str zip_file_path: The full file path to where the zip file is located.
+    :param object properties: The property group that contains variables that maintain the addon's correct state.
     """
-    if '.json' in os.path.basename(file_path):
-        try:
-            original_umask = os.umask(0)
-            if os.path.exists(file_path):
-                os.chmod(file_path, 0o777)
-            file = open(file_path, 'w+')
-        finally:
-            os.umask(original_umask)
-        json.dump(data, file, indent=1)
-        file.close()
+    # get the template name and path from the zip file
+    template_name = os.path.basename(zip_file_path).replace('.zip', '')
+    template_folder_path = os.path.join(properties.skeleton_templates_path, template_name)
+
+    # create the template folder
+    create_template_folder(template_name, properties)
+
+    # unpack the zip file into the new template folder
+    shutil.unpack_archive(zip_file_path, template_folder_path, 'zip')
+
+
+def export_zip(zip_file_path, properties):
+    """
+    This function packs the selected export template into a zip folder, and saves it to the provided path on disk.
+
+    :param str zip_file_path: The full file path to where the zip file will be saved on disk.
+    :param object properties: The property group that contains variables that maintain the addon's correct state.
+    """
+    # remove .zip extension if it exists
+    no_extension_file_path = zip_file_path.replace('.zip', '')
+
+    # zip up the folder and save it to the given path
+    template_folder_path = os.path.join(properties.skeleton_templates_path, properties.selected_export_template)
+    shutil.make_archive(no_extension_file_path, 'zip', template_folder_path)
+
+
+def safe_get_skeleton_templates(self, context):
+    """
+    This function is an EnumProperty safe wrapper for get_skeleton_templates.
+
+    :param object self: This is a reference to the class this functions in appended to.
+    :param object context: The context of the object this function is appended to.
+    :return list: Result of get_skeleton_templates.
+    """
+    items = get_skeleton_templates()
+    global _result_reference_get_skeleton_templates
+    _result_reference_get_skeleton_templates = items
+    return items

@@ -13,7 +13,7 @@ class UESKELETONProperties(bpy.types.PropertyGroup):
 
     # template constants
     skeleton_templates_path = templates.get_skeleton_templates_path()
-    default_template = 'default'
+    default_template = 'example'
 
      # utility constants
     picker_name = 'picker'
@@ -34,6 +34,14 @@ class UESKELETONProperties(bpy.types.PropertyGroup):
         items=templates.safe_populate_templates_dropdown,
         options={'ANIMATABLE'},
         update=templates.set_template
+    )
+
+    # exporter properties
+    selected_export_template: bpy.props.EnumProperty(
+        name="Export Skeleton Template",
+        description=tool_tips.export_template_tool_tip,
+        items=templates.safe_get_skeleton_templates,
+        options={'ANIMATABLE'}
     )
 
 

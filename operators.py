@@ -2,8 +2,10 @@
 
 import bpy
 
+from .ui import exporter
 from .functions import scene
 from .functions import templates
+from bpy_extras.io_utils import ImportHelper
 
 class RemoveTemplateFolder(bpy.types.Operator):
     """Remove this template from the addon"""
@@ -30,11 +32,24 @@ class ConvertToEpicSkeleton(bpy.types.Operator):
         print("convert execute")
         return {'FINISHED'}
 
-
-class NullOperator(bpy.types.Operator):
-    """This is an operator that changes nothing, but it used to clear the undo stack"""
-    bl_idname = "ueskeleton.null_operator"
-    bl_label = "Null Operator"
+class ExportSkeletonTemplate(bpy.types.Operator, exporter.ExportSkeletonTemplate):
+    """Export a skeleton template"""
+    bl_idname = "ueskeleton.export_skeleton_template"
+    bl_label = "Export Template"
 
     def execute(self, context):
+        properties = bpy.context.window_manager.ueskeleton
+        templates.export_zip(self.filepath, properties)
+        return {'FINISHED'}
+
+
+class ImportSkeletonTemplate(bpy.types.Operator, ImportHelper):
+    """Import a skeleton template"""
+    bl_idname = "ueskeleton.import_skeleton_template"
+    bl_label = "Import Template"
+    filename_ext = ".zip"
+
+    def execute(self, context):
+        properties = bpy.context.window_manager.ueskeleton
+        templates.import_zip(self.filepath, properties)
         return {'FINISHED'}
